@@ -1,12 +1,11 @@
-
 DECLARE @start_time DATETIME2, @end_time DATETIME2;
 SET @start_time = SYSDATETIME();
 PRINT '------------------------------------------------';
 PRINT 'Loading CRM Tables';
 PRINT '------------------------------------------------';
-PRINT 'Truncation table: silver.crm_cust_info';
+PRINT '>>Truncating Table: silver.crm_cust_info';
 TRUNCATE TABLE silver.crm_cust_info;
-PRINT 'Inserting table: silver.crm_cust_info';
+PRINT '>>Inserting Data Into: silver.crm_cust_info';
 
 INSERT INTO silver.crm_cust_info (
     cst_id,
@@ -46,9 +45,9 @@ SET @end_time = SYSDATETIME();
 PRINT 'Exicution Time ' + CAST(DATEDIFF(MILLISECOND, @start_time, @end_time) AS NVARCHAR) + ' ms'
 PRINT '>> -------------';
 
+-- ==============================================================================================
 
-
--- ================================================================================================
+SET @start_time = SYSDATETIME();
 PRINT '>> Truncating Table: silver.crm_prd_info';
 TRUNCATE TABLE silver.crm_prd_info;
 PRINT '>> Inserting Data Into: silver.crm_prd_info';
@@ -77,4 +76,7 @@ select
     end as prd_line,
     prd_start_dt,
     dateadd(day, -1, lead(prd_start_dt) over(partition by prd_key order by prd_start_dt)) as prd_end_dt
-from bronze.crm_prd_info;
+from bronze.crm_prd_info
+SET @end_time = SYSDATETIME();
+PRINT 'Exicution Time ' + CAST(DATEDIFF(MILLISECOND, @start_time, @end_time) AS NVARCHAR) + ' ms'
+PRINT '>> -------------';
