@@ -38,7 +38,7 @@ This scripts creates table inside the DataWarehouse
         sls_ship_dt INT,
         sls_due_dt INT,
         sls_sales INT,
-        sls_quanity INT,
+        sls_quantity INT,
         sls_price INT,
         dwh_creation_date DATETIME2 DEFAULT GETDATE()
     );
